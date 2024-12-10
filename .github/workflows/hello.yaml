@@ -11,3 +11,7 @@ jobs:
     steps:
       - name: Say hello
         run: echo "Hello Full Stack Open!"
+      - name: Print current date
+        run: date
+      - name: List directory content
+        run: ls -alh
