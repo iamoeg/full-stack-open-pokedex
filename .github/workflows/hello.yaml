@@ -1,0 +1,13 @@
+name: Hello Full Stack Open!
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Say hello
+        run: echo "Hello Full Stack Open!"
