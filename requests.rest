@@ -1,0 +1,1 @@
+GET https://pokedex-little-feather-4229.fly.dev/version

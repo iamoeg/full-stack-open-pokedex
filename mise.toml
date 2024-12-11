@@ -1,0 +1,7 @@
+[tools]
+node   = "22"
+flyctl = "latest"
+
+[tasks.fly]
+description = "Run flyctl"
+run         = "flyctl"
