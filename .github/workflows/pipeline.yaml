@@ -93,3 +93,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: "patch"
+
+  notify_discord:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    concurrency: deploy-group
+    steps:
+      - name: Success case
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          details: New release deployed successfully!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Failure case
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: New release deployed successfully!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
