@@ -71,7 +71,7 @@ jobs:
           retention-days: 30
 
   deploy:
-    if: ${{ github.event_name == 'push' && github.env.MUST_SKIP_DEPLOYMENT == 'false' }}
+    if: ${{ github.event_name == 'push' && github.env.MUST_SKIP_DEPLOYMENT == false }}
     needs: [lint, build, test, e2e-test]
     runs-on: ubuntu-latest
     concurrency: deploy-group # optional: ensure only one action runs at a time
