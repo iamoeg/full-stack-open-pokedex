@@ -1,0 +1,15 @@
+name: Healthcheck
+
+on:
+  schedule:
+    - cron: "* * * * *"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jtalk/url-health-check-action@v4
+        with:
+          url: https://pokedex-little-feather-4229.fly.dev/health
+          max-attempts: 3
+          retry-delay: 5s
