@@ -85,13 +85,13 @@ jobs:
         if: ${{ success() }}
         uses: sebastianpopp/discord-action@releases/v2
         with:
-          message: New release deployed successfully!
+          message: "New release deployed successfully!\nRepository: ${{ github.repository }}"
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure case
         if: ${{ failure() }}
         uses: sebastianpopp/discord-action@releases/v2
         with:
-          message: Deployment failed!
+          message: "Deployment failed! \nRepository: ${{ github.repository }}"
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
@@ -105,23 +105,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: "patch"
-
-  # notify_discord:
-  #   needs: [deploy]
-  #   runs-on: ubuntu-latest
-  #   concurrency: deploy-group
-  #   steps:
-  #     - name: Success case
-  #       if: ${{ success() }}
-  #       uses: rjstone/discord-webhook-notify@v1
-  #       with:
-  #         severity: info
-  #         details: New release deployed successfully!
-  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-  #     - name: Failure case
-  #       if: ${{ failure() }}
-  #       uses: rjstone/discord-webhook-notify@v1
-  #       with:
-  #         severity: error
-  #         details: New release deployed successfully!
-  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
