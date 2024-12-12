@@ -81,6 +81,20 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Success case
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          details: New release deployed successfully!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Failure case
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: New release failed deployed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     if: ${{ github.event_name == 'push' }}
@@ -94,22 +108,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: "patch"
 
-  notify_discord:
-    needs: [deploy]
-    runs-on: ubuntu-latest
-    concurrency: deploy-group
-    steps:
-      - name: Success case
-        if: ${{ success() }}
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: info
-          details: New release deployed successfully!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Failure case
-        if: ${{ failure() }}
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          details: New release deployed successfully!
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  # notify_discord:
+  #   needs: [deploy]
+  #   runs-on: ubuntu-latest
+  #   concurrency: deploy-group
+  #   steps:
+  #     - name: Success case
+  #       if: ${{ success() }}
+  #       uses: rjstone/discord-webhook-notify@v1
+  #       with:
+  #         severity: info
+  #         details: New release deployed successfully!
+  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  #     - name: Failure case
+  #       if: ${{ failure() }}
+  #       uses: rjstone/discord-webhook-notify@v1
+  #       with:
+  #         severity: error
+  #         details: New release deployed successfully!
+  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
