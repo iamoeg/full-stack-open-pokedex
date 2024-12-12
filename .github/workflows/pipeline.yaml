@@ -83,18 +83,16 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Success case
         if: ${{ success() }}
-        uses: rjstone/discord-webhook-notify@v1
+        uses: sebastianpopp/discord-action@releases/v2
         with:
-          severity: info
-          details: "New release deployed successfully!"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: New release deployed successfully!
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure case
         if: ${{ failure() }}
-        uses: rjstone/discord-webhook-notify@v1
+        uses: sebastianpopp/discord-action@releases/v2
         with:
-          severity: error
-          details: "Deployment failed!"
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          message: Deployment failed!
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     if: ${{ github.event_name == 'push' }}
