@@ -86,14 +86,14 @@ jobs:
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: info
-          details: New release deployed successfully!
+          details: "New release deployed successfully!"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure case
         if: ${{ failure() }}
         uses: rjstone/discord-webhook-notify@v1
         with:
           severity: error
-          details: New release failed deployed!
+          details: "Deployment failed!"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
